@@ -5,6 +5,10 @@ Gem::Specification.new do |s|
   s.description = "A Jekyll plugin that uses the minify-html Rust crate to minify HTML files."
   s.authors     = ["gandaro"]
   s.files       = ["lib/jekyll-minify-html-rs.rb"]
+  s.license     = "MIT"
+  s.metadata    = {
+    "source_code_uri" => "https://github.com/gandaro/jekyll-minify-html-rs"
+  }
 
   s.add_dependency 'minify_html', '~> 0.18.1'
 end
