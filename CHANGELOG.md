@@ -8,7 +8,7 @@ SPDX-License-Identifier: MIT AND AGPL-3.0-or-later
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0] - 2026-10-22
+## [1.1.0] - 2026-10-21
 
 First release as **`jekyll-minify-flow`** — a fork of
 [gandaro/jekyll-minify-html-rs](https://github.com/gandaro/jekyll-minify-html-rs)

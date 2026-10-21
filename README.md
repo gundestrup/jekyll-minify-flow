@@ -24,7 +24,7 @@ This Jekyll plugin uses [minify-html](https://crates.io/crates/minify-html) to m
 ## Installation
 
 ```rb
-gem "jekyll-minify-flow", "~> 1.0"
+gem "jekyll-minify-flow", "~> 1.1.0"
 ```
 
 Add `jekyll-minify-flow` to the `plugins` list in `_config.yml`:
