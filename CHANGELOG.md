@@ -1,6 +1,55 @@
+<!--
+Copyright (C) 2025  gandaro
+Copyright (C) 2026  Svend Gundestrup
+SPDX-License-Identifier: MIT AND AGPL-3.0-or-later
+-->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [Unreleased]
+
+### Added
+
+- Standalone CSS minification via the `lightningcss` gem: every `.css` file
+  written to the destination — static files and `.scss` sources compiled by
+  Jekyll — is minified at site `post_write` with priority `:high`, ahead of
+  Fingerprint Flow (12) and Compress Flow (10). A new `minify_css` map in
+  `_config.yml` exposes `enabled`, `minify`, `error_recovery`, `targets`,
+  `css_modules` and `scope`; invalid values fail the build, and parse errors
+  name the offending file.
+- Dependabot configuration for weekly `bundler` and `github-actions` updates.
+- `test/system/` suite: builds the `.gem` artifact, verifies packaged files
+  and metadata via `Gem::Package`, extracts the package and runs a real
+  `jekyll build` against it via `bundle exec` — catches `spec.files` gaps.
+- Rebuild-idempotency test: a second build on the same destination stays
+  correctly minified.
+
+### Changed
+
+- Renamed the project/gem to `jekyll-minify-flow` (gemspec, lib entry
+  point, `JekyllMinifyFlow` module, packaged files, docs). Configuration
+  keys `minify_html`/`minify_css` are unchanged.
+- Relicensed: the fork's new work is now AGPL-3.0-or-later (`LICENSE`),
+  while the original upstream code remains MIT (`LICENSE.MIT`). The
+  gemspec `license` field and packaged file list were updated
+  accordingly.
+- Test suite migrated from RSpec to Minitest (`test/`), keeping the
+  real-Jekyll-site assertions; `rubocop-rspec` replaced with
+  `rubocop-minitest`. `test_helper` carries SimpleCov (CI-gated Cobertura,
+  per-suite `command_name` so unit and system coverage merge), `-w`
+  warnings, and a 98/90 coverage gate on CI.
+
+- `required_ruby_version` is now capped at `< 3.5.dev` — the `minify_html`
+  dependency (0.18.1) declares `Ruby < 3.5.dev` and ships no precompiled
+  binary for Ruby 4.0, so installing on Ruby 4 failed at dependency
+  resolution. The cap makes the constraint explicit; it can be lifted once
+  upstream ships Ruby 4.0 support (wilsonzlin/minify-html#278).
+- Specs no longer read `Jekyll::Hooks` internals (`@registry`,
+  `@hook_priority`): hook registration is now verified via the public
+  `Jekyll::Hooks.trigger` API, and `post_write` probe cleanup uses a
+  deactivation flag instead of mutating the registry.
 
 ## [1.1.0] - 2026-10-06
 

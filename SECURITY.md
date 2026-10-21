@@ -1,3 +1,8 @@
+<!--
+Copyright (C) 2025  gandaro
+SPDX-License-Identifier: MIT
+-->
+
 # Security Policy
 
 This repository is a fork of [gandaro/jekyll-minify-html-rs](https://github.com/gandaro/jekyll-minify-html-rs).

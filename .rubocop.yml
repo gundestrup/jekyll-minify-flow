@@ -1,3 +1,7 @@
+# Copyright (C) 2025  gandaro
+# Copyright (C) 2026  Svend Gundestrup
+# SPDX-License-Identifier: MIT AND AGPL-3.0-or-later
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 3.3
@@ -7,10 +11,10 @@ AllCops:
     - "vendor/**/*"
     - "node_modules/**/*"
     - "tmp/**/*"
-    - "spec/fixtures/**/*"
+    - "test/fixtures/**/*"
 
 plugins:
-  - rubocop-rspec
+  - rubocop-minitest
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
@@ -20,32 +24,36 @@ Style/FrozenStringLiteralComment:
 
 Style/Documentation:
   Exclude:
-    - "lib/jekyll-minify-html-rs.rb"
+    - "lib/jekyll-minify-flow.rb"
+    - "test/**/*"
 
 Layout/LineLength:
   Max: 120
 
 Metrics/BlockLength:
   Exclude:
-    - "spec/**/*"
+    - "test/**/*"
     - "*.gemspec"
     - "Rakefile"
 
 Metrics/MethodLength:
   Max: 20
+  Exclude:
+    - "test/**/*"
 
 Metrics/AbcSize:
   Max: 20
-
-RSpec/ExampleLength:
   Exclude:
-    - "spec/**/*"
+    - "test/**/*"
 
-RSpec/MultipleExpectations:
+Metrics/ClassLength:
   Exclude:
-    - "spec/**/*"
+    - "test/**/*"
+
+Minitest/MultipleAssertions:
+  Enabled: false
 
 Naming/FileName:
   Exclude:
-    - "lib/jekyll-minify-html-rs.rb"
-    - "jekyll-minify-html-rs.gemspec"
+    - "lib/jekyll-minify-flow.rb"
+    - "jekyll-minify-flow.gemspec"

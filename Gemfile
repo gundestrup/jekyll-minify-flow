@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Copyright (C) 2025  gandaro
+# Copyright (C) 2026  Svend Gundestrup
+# SPDX-License-Identifier: MIT AND AGPL-3.0-or-later
+
 source "https://rubygems.org"
 
 gemspec
@@ -7,13 +11,17 @@ gemspec
 group :development, :test do
   gem "bundler-audit", "~> 0.9"
   gem "csv" # jekyll needs it explicitly on Ruby >= 3.4 (removed from stdlib)
+  gem "minitest", "~> 6.0"
   gem "rake", "~> 13.2"
-  gem "rspec", "~> 3.13"
   gem "tmpdir"
 end
 
-gem "rubocop", "~> 1.91", group: :development
-gem "rubocop-rspec", "~> 3.10", group: :development
+group :development do
+  gem "rubocop", "~> 1.91"
+  gem "rubocop-minitest", "~> 0.41"
+end
 
-gem "simplecov", "~> 1.1", group: :test
-gem "simplecov-cobertura", "~> 4.0", group: :test
+group :test do
+  gem "simplecov", "~> 1.1"
+  gem "simplecov-cobertura", "~> 4.0"
+end
