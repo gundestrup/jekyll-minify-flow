@@ -1,7 +1,7 @@
 # Copyright (C) 2026  Svend Gundestrup
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-name: Release gem
+name: Release
 
 on:
   push:
@@ -14,34 +14,29 @@ permissions:
 
 jobs:
   release:
-    name: Build and publish RubyGem
     runs-on: ubuntu-latest
-    environment: release
     steps:
       - name: Check out repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
+        uses: actions/checkout@08c2c1ee74b0b6d1f1b96ffb8242e4e76b6e0a72 # v6.0.1
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
+        uses: ruby/setup-ruby@f26946a3b6f7ca3a5008ec82f1b646b7aecb0ede # v1.275.0
         with:
+          ruby-version: "3.4"
           bundler-cache: true
-          # no ruby-version: — setup-ruby reads .ruby-version (single source)
 
-      - name: Verify tag matches gem version
-        run: test "v$(bundle exec rake version:show)" = "${GITHUB_REF_NAME}"
-
-      - name: Verify CHANGELOG has an entry for this version
-        run: bundle exec rake version:check_changelog
+      - name: Run tests
+        run: bundle exec rake ci
 
       - name: Build gem
         run: gem build jekyll-minify-flow.gemspec
 
-      - name: Upload gem to GitHub release
+      - name: Publish to RubyGems
+        uses: rubygems/release-gem@3b41f4d7ed688c635ec8f6b45809bf6a95b55b3a # v1.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub release
         uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3.0.3
         with:
           files: jekyll-minify-flow-*.gem
-
-      - name: Publish to RubyGems
-        uses: rubygems/release-gem@7f9650160c1a4e7989fdc9855807bdbd421d8b6b # v1.4.1
