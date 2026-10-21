@@ -32,7 +32,7 @@ jobs:
         run: gem build jekyll-minify-flow.gemspec
 
       - name: Publish to RubyGems
-        uses: rubygems/release-gem@3b41f4d7ed688c635ec8f6b45809bf6a95b55b3a # v1.1.0
+        uses: rubygems/release-gem@7f9650160c1a4e7989fdc9855807bdbd421d8b6b # v1.4.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
