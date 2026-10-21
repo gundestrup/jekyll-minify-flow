@@ -60,7 +60,7 @@ class GemArtifactTest < Minitest::Test
     Bundler.with_unbundled_env do
       Dir.chdir(site_dir) do
         system({ "BUNDLE_GEMFILE" => File.join(site_dir, "Gemfile") },
-               "bundle", "install", "--local", "--quiet", exception: true)
+               "bundle", "install", "--quiet", exception: true)
         system("bundle", "exec", "jekyll", "build", "--quiet", exception: true)
       end
     end
