@@ -21,9 +21,12 @@ end
 
 require "jekyll"
 require "jekyll-minify-flow"
+require "jekyll_test_harness"
 require "minitest/autorun"
 require "fileutils"
 require "tmpdir"
+
+JekyllTestHarness.install!(framework: :minitest)
 
 PROJECT_ROOT = File.expand_path("..", __dir__)
 
@@ -54,30 +57,19 @@ class JekyllMinifyFlowTest < Minitest::Test
     </html>
   HTML
 
-  def setup
-    @source = Dir.mktmpdir
-    @dest = Dir.mktmpdir
-    write_source("index.html", PAGE_HTML)
-  end
-
-  def teardown
-    FileUtils.remove_entry(@source)
-    FileUtils.remove_entry(@dest)
-  end
-
   private
 
-  def write_source(name, content)
-    File.write(File.join(@source, name), content)
-  end
-
-  def read_dest(name)
-    File.read(File.join(@dest, name))
-  end
-
-  def build_site(config = {})
-    site_config = { "source" => @source, "destination" => @dest, "quiet" => true }.merge(config)
-    Jekyll::Site.new(Jekyll.configuration(site_config)).process
-    read_dest("index.html")
+  # Builds a real site via jekyll-test-harness. index.html carries PAGE_HTML;
+  # `files` merges extra source files and `config` merges into _config.yml.
+  # Yields the scoped output-files handle for extra _site reads — the temp
+  # tree is removed once jekyll_build returns, so all dest assertions must
+  # run inside the block. Returns rendered index.html.
+  def build_site(config = {}, files = {})
+    index_html = nil
+    jekyll_build(config: config, files: { "index.html" => PAGE_HTML }.merge(files)) do |site, output_files|
+      index_html = output_files.read("index.html")
+      yield site, output_files if block_given?
+    end
+    index_html
   end
 end
