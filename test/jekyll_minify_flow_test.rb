@@ -137,6 +137,33 @@ class MinifyHtmlTest < JekyllMinifyFlowTest
 
     assert_includes read_dest("2026/01/01/test.html"), "<p>spaced"
   end
+
+  def test_minifies_pages_rendered_through_a_layout
+    FileUtils.mkdir_p(File.join(@source, "_layouts"))
+    write_source("_layouts/default.html", <<~HTML)
+      <html>
+        <body>
+          {{ content }}
+          <!-- layout comment -->
+        </body>
+      </html>
+    HTML
+    write_source("index.html", "---\nlayout: default\n---\n<p>   spaced   </p>\n")
+    output = build_site
+
+    assert_includes output, "<p>spaced"
+    refute_includes output, "layout comment"
+  end
+
+  def test_minifies_html_pulled_in_from_an_include
+    FileUtils.mkdir_p(File.join(@source, "_includes"))
+    write_source("_includes/chunk.html", "<span>   chunk   </span><!-- include comment -->")
+    write_source("index.html", "---\n---\n<div>{% include chunk.html %}</div>\n")
+    output = build_site
+
+    assert_includes output, "<span> chunk </span>"
+    refute_includes output, "include comment"
+  end
 end
 
 class MinifyCssTest < JekyllMinifyFlowTest
