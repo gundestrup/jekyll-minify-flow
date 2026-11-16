@@ -4,7 +4,9 @@ Copyright (C) 2026  Svend Gundestrup
 SPDX-License-Identifier: MIT AND AGPL-3.0-or-later
 -->
 
-# jekyll-minify-flow
+<!-- markdownlint-disable MD013 MD033 -->
+# jekyll-minify-flow <a href="https://gundestrup.github.io/flow/"><img align="right" src="https://gundestrup.github.io/flow/assets/badges/part-of-flow.svg?v=2" alt="Part of Flow software" height="40"></a>
+<!-- markdownlint-enable MD013 MD033 -->
 
 [![Status: Active](https://img.shields.io/badge/status-active-success)](https://github.com/gundestrup/jekyll-minify-flow)
 [![CI](https://github.com/gundestrup/jekyll-minify-flow/actions/workflows/ci.yml/badge.svg)](https://github.com/gundestrup/jekyll-minify-flow/actions/workflows/ci.yml)
