@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
     "rubygems_mfa_required" => "true"
   }
 
-  s.required_ruby_version = ">= 3.3.0", "< 3.5.dev"
+  s.required_ruby_version = ">= 3.3.0", "< 3.5"
   s.files = Dir["lib/**/*", "README.md", "LICENSE", "LICENSE.MIT", "CHANGELOG.md"]
 
   s.add_dependency "jekyll", ">= 4.4", "< 5.0"
